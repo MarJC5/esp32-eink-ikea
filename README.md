@@ -26,6 +26,15 @@ Le firmware démarre en **mode push** (il écoute le port série, n'affiche rien
 
 ## 1) Afficher dynamiquement (push série, sans reflasher)
 
+### App de bureau (le plus simple)
+```bash
+make gui          # ou : python tools/epd_gui.py
+```
+Fenêtre Tkinter : choisis le **port** (auto-détecté), une **image** (Parcourir) ou du **texte**,
+règle le tramage / cadrage / luminosité / rouge, vois l'**aperçu en direct**, puis **« Envoyer à
+l'écran »**. (macOS : si `tkinter` manque, `brew install python-tk`.)
+
+### Ligne de commande
 ```bash
 python tools/show.py data/images/image.png       # une image (tramage 3 couleurs par défaut)
 python tools/show.py --text "Bonjour Fabrice"     # du texte
@@ -148,8 +157,10 @@ src/
     text.cpp image.cpp grid.cpp netclock.cpp   helpers de dessin
 tools/
   epd_dither.py       conversion image -> plans (dithering 3 couleurs) [partagé]
+  epd_push.py         cœur du push série (render/frame/preview/push) [partagé]
+  epd_gui.py          app de bureau Tkinter (make gui)
+  show.py             push série d'une image/texte en CLI
   img2cpp.py          image -> include/images.h
-  show.py             push série d'une image/texte (dynamique)
   txt2grid.py         grille ASCII -> include/grids.h
   flash.sh            flash de secours / restore
 data/

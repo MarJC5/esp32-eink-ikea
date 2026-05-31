@@ -8,7 +8,7 @@ PYTHON  := $(VENV)/bin/python
 GRIDS   := $(wildcard data/grids/*.txt)
 IMG     ?=
 
-.PHONY: help venv build upload flash nostub restore monitor grids check img show backup clean
+.PHONY: help venv build upload flash nostub restore monitor grids check img show gui backup clean
 
 help:
 	@echo "Cibles disponibles :"
@@ -22,6 +22,7 @@ help:
 	@echo "  make check     controle les dimensions des grilles (sans ecrire)"
 	@echo "  make img IMG=x.png   image -> include/images.h (a coller dans scene.cpp)"
 	@echo "  make show IMG=x.png  affiche une image via PUSH serie (sans reflasher)"
+	@echo "  make gui       ouvre l'app de bureau (choisir image/texte + apercu + envoyer)"
 	@echo "  make backup    relit 4MB de flash -> backup/"
 	@echo "  make clean     nettoie le build"
 
@@ -58,6 +59,9 @@ img:
 show:
 	@test -n "$(IMG)" || { echo "usage: make show IMG=chemin/image.png"; exit 1; }
 	$(PYTHON) tools/show.py "$(IMG)"
+
+gui:
+	$(PYTHON) tools/epd_gui.py
 
 backup:
 	@mkdir -p backup

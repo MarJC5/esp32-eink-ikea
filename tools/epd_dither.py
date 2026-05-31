@@ -51,6 +51,21 @@ def fit_image(img, w, h, mode="cover"):
     return canvas
 
 
+def place_image(src, w, h, zoom=1.0, off_x=0.0, off_y=0.0, bg=(255, 255, 255)):
+    """Place `src` dans w x h avec zoom + décalage (repositionnement libre).
+    zoom=1.0 = remplit (cover) ; <1 = marges blanches ; off_x/off_y dans [-1,1]
+    (fraction d'un demi-écran) déplacent l'image. Recadre/centre, fond blanc."""
+    src = src.convert("RGB")
+    s = max(w / src.width, h / src.height) * max(0.05, zoom)   # base cover * zoom
+    nw, nh = max(1, round(src.width * s)), max(1, round(src.height * s))
+    big = src.resize((nw, nh))
+    px = round((w - nw) / 2 + off_x * w / 2)
+    py = round((h - nh) / 2 + off_y * h / 2)
+    canvas = Image.new("RGB", (w, h), bg)
+    canvas.paste(big, (px, py))
+    return canvas
+
+
 def _load_font(size):
     for p in _FONT_PATHS:
         try:
