@@ -6,12 +6,22 @@
 #include <Adafruit_GFX.h>
 #include "config.h"
 
-// Dalle e-ink 168 x 384 natif (portrait), contrôleur UC8151.
-// On dessine en PAYSAGE 384 x 168 (rotation 1 du canvas).
+// Géométrie selon le modèle (cf. EPD_MODEL dans config.h).
+#if EPD_MODEL == EPD_5IN79
+// Dalle 792 x 272, double contrôleur : paysage natif (pas de rotation).
+static const uint16_t NATIVE_W = 792;
+static const uint16_t NATIVE_H = 272;
+static const uint16_t SCREEN_W = 792;
+static const uint16_t SCREEN_H = 272;
+static const uint8_t  CANVAS_ROT = 0;
+#else
+// Dalle 168 x 384 natif (portrait) ; on dessine en PAYSAGE 384 x 168 (rotation 1).
 static const uint16_t NATIVE_W = 168;
 static const uint16_t NATIVE_H = 384;
 static const uint16_t SCREEN_W = 384;   // largeur logique (paysage)
 static const uint16_t SCREEN_H = 168;   // hauteur logique
+static const uint8_t  CANVAS_ROT = 1;
+#endif
 
 // Plans de dessin : un pour le noir, un pour le rouge (bit=1 => couleur).
 extern GFXcanvas1 gfxBlack;

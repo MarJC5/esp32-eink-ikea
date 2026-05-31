@@ -18,10 +18,18 @@
 // (MISO non utilisé par l'e-ink -> -1)
 
 // ---------------------------------------------------------------------
-// 2) ÉCRAN : e-ink 168x384, 3 couleurs (N/B/R), contrôleur UC8151.
-//    Driver : src/drivers/epd2in9b.cpp (BUSY 0x71 non fiable -> délai fixe).
-//    Couleurs logiques pour les helpers de dessin :
+// 2) ÉCRAN : choix du MODÈLE (un seul driver compilé à la fois).
+//    EPD_2IN9  = dalle 168x384, contrôleur UC8151  (src/drivers/epd2in9b.cpp)
+//    EPD_5IN79 = dalle 792x272 double contrôleur HX8717 (src/drivers/epd5in79.cpp)
+//    Les deux sont 3 couleurs (N/B/R). BUSY non fiable (dalles nues) -> délais fixes.
 // ---------------------------------------------------------------------
+#define EPD_2IN9   0
+#define EPD_5IN79  1
+// 2.9" = fonctionnel. 5.79" = driver prêt mais nécessite une carte d'adaptation
+// (boost VGH/VGL/VCOM) : la dalle 5.79 NUE n'a pas assez de tension (image délavée).
+#define EPD_MODEL  EPD_2IN9
+
+// Couleurs logiques pour les helpers de dessin :
 #define EPD_WHITE  0
 #define EPD_BLACK  1
 #define EPD_RED    2

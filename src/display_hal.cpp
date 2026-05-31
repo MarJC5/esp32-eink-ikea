@@ -8,8 +8,8 @@ GFXcanvas1 gfxRed(NATIVE_W, NATIVE_H);
 
 void initDisplay() {
   epdInit();
-  gfxBlack.setRotation(1);   // dessin en paysage 384x168
-  gfxRed.setRotation(1);
+  gfxBlack.setRotation(CANVAS_ROT);
+  gfxRed.setRotation(CANVAS_ROT);
 }
 
 void epdShow() {

@@ -1,6 +1,7 @@
+#include "config.h"
+#if EPD_MODEL == EPD_2IN9
 #include "epd_driver.h"
 #include <SPI.h>
-#include "config.h"
 
 // =====================================================================
 //  Dalle Waveshare 2.9" (B) — 168 x 384, 3 couleurs (N/B/R), contrôleur UC8151.
@@ -115,3 +116,5 @@ void epdReplLoop() {
     else { Serial.print("[?] "); Serial.println(line); }
   }
 }
+
+#endif // EPD_MODEL == EPD_2IN9
