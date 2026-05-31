@@ -1,0 +1,22 @@
+# PlatformIO
+.pio/
+.pioenvs/
+.piolibdeps/
+
+# Environnement Python
+.venv/
+__pycache__/
+*.pyc
+
+# Sauvegardes de firmware (gros binaires)
+backup/*.bin
+
+# Fichiers OS / éditeurs
+.DS_Store
+*.swp
+.vscode/
+.idea/
+
+# SDK Waveshare (vendeur, re-telechargeable)
+E-Paper_code/
+E-Paper_code.zip
