@@ -1,0 +1,4 @@
+# Dépendances des outils Python du projet (générateur de polices).
+#   python -m venv .venv && source .venv/bin/activate
+#   pip install -r tools/requirements.txt
+freetype-py>=2.4

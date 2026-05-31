@@ -8,7 +8,7 @@ PYTHON  := $(VENV)/bin/python
 GRIDS   := $(wildcard data/grids/*.txt)
 IMG     ?=
 
-.PHONY: help venv build upload flash nostub restore monitor grids check img show gui backup clean
+.PHONY: help venv build upload flash nostub restore monitor grids check img fonts show gui backup clean
 
 help:
 	@echo "Cibles disponibles :"
@@ -21,6 +21,7 @@ help:
 	@echo "  make grids     regenere include/grids.h depuis data/grids/*.txt"
 	@echo "  make check     controle les dimensions des grilles (sans ecrire)"
 	@echo "  make img IMG=x.png   image -> include/images.h (a coller dans scene.cpp)"
+	@echo "  make fonts     regenere include/fonts/*.h depuis tools/fonts/*.ttf"
 	@echo "  make show IMG=x.png  affiche une image via PUSH serie (sans reflasher)"
 	@echo "  make gui       ouvre l'app de bureau (choisir image/texte + apercu + envoyer)"
 	@echo "  make backup    relit 4MB de flash -> backup/"
@@ -29,6 +30,7 @@ help:
 venv:
 	python3 -m venv $(VENV)
 	$(VENV)/bin/pip install -q --upgrade pip platformio pillow
+	$(VENV)/bin/pip install -q -r tools/requirements.txt
 	@echo "venv pret."
 
 build: grids
@@ -47,21 +49,24 @@ monitor:
 	$(PIO) device monitor
 
 grids:
-	@$(PYTHON) tools/txt2grid.py $(GRIDS)
+	@$(PYTHON) tools/grids/txt2grid.py $(GRIDS)
 
 check:
-	@$(PYTHON) tools/txt2grid.py --check --strict $(GRIDS)
+	@$(PYTHON) tools/grids/txt2grid.py --check --strict $(GRIDS)
 
 img:
 	@test -n "$(IMG)" || { echo "usage: make img IMG=chemin/image.png"; exit 1; }
-	$(PYTHON) tools/img2cpp.py "$(IMG)"
+	$(PYTHON) tools/image/img2cpp.py "$(IMG)"
+
+fonts:
+	PYTHON=$(PYTHON) ./tools/fonts/gen_fonts.sh
 
 show:
 	@test -n "$(IMG)" || { echo "usage: make show IMG=chemin/image.png"; exit 1; }
-	$(PYTHON) tools/show.py "$(IMG)"
+	$(PYTHON) tools/image/show.py "$(IMG)"
 
 gui:
-	$(PYTHON) tools/epd_gui.py
+	$(PYTHON) tools/image/epd_gui.py
 
 backup:
 	@mkdir -p backup
