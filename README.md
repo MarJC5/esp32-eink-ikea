@@ -173,11 +173,3 @@ backup/               image de sauvegarde du flash (dump 4 MB)
 - **Réutiliser une autre dalle nue** → beaucoup de dalles e-ink ont besoin d'un circuit d'alimentation
   haute tension (boost VGH/VGL/VCOM) situé sur leur **carte pilote**. Une dalle nue sans ce circuit
   affiche un motif figé indépendant des données (refresh « à vide »).
-
----
-
-## Note historique
-Le driver s'appelle `epd2in9b` par héritage (il dérive de la démo Waveshare `epd2in9b_V3`, contrôleur
-UC8151). Une précédente dalle 5.79" (792×272, double contrôleur, récupérée d'une étiquette de prix
-IKEA/SES-Imagotag) s'est révélée **HS** (alimentation/FPC) : le motif restait figé quel que soit le
-firmware — le logiciel était bon, c'était le matériel.
